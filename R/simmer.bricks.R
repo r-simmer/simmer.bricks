@@ -1,7 +1,6 @@
 #' \pkg{simmer.bricks}: Helper Methods for \pkg{simmer} Trajectories
 #'
-#' \pkg{simmer} bricks are helper methods that encapsulate common activity
-#' patterns in \pkg{simmer} trajectories.
+#' Provides wrappers for common activity patterns in \pkg{simmer} trajectories.
 #'
 #' @author Iñaki Ucar
 #'

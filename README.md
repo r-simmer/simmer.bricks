@@ -5,7 +5,7 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/simmer.bricks)](https://cran.r-project.org/package=simmer.bricks)
 [![Downloads](https://cranlogs.r-pkg.org/badges/simmer.bricks)](https://cran.rstudio.com/package=simmer.bricks)
 
-**simmer.bricks** provides helper methods for [**simmer**](http://r-simmer.org), the Discrete-Event Simulation (DES) package for R. Each **simmer** *brick* encapsulates a common activity pattern that can be used to build trajectories more conveniently.
+**simmer.bricks** provides helper methods for [**simmer**](http://r-simmer.org), the Discrete-Event Simulation (DES) package for R. Each **simmer** *brick* wraps a common activity pattern that can be used to build trajectories more conveniently.
 
 ## Installation
 

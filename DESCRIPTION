@@ -4,8 +4,7 @@ Title: Helper Methods for 'simmer' Trajectories
 Version: 0.0.0.9000
 Authors@R: c(
     person("Iñaki", "Ucar", email="i.ucar86@gmail.com", role=c("aut", "cph", "cre")))
-Description: 'simmer' bricks are helper methods that encapsulate common activity
-    patterns in 'simmer' trajectories.
+Description: Provides wrappers for common activity patterns in 'simmer' trajectories.
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: http://r-simmer.org, https://github.com/r-simmer/simmer.bricks
