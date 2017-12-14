@@ -1,0 +1,15 @@
+#' \pkg{simmer.bricks}: Helper Methods for \pkg{simmer} Trajectories
+#'
+#' \pkg{simmer} bricks are helper methods that encapsulate common activity
+#' patterns in \pkg{simmer} trajectories.
+#'
+#' @author Iñaki Ucar
+#'
+#' @seealso \pkg{simmer}'s homepage \url{http://r-simmer.org} and
+#' GitHub repository \url{https://github.com/r-simmer/simmer.bricks}.
+#'
+#' @docType package
+#' @name simmer.bricks
+#'
+#' @import simmer
+NULL

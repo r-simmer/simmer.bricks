@@ -1,0 +1,24 @@
+template:
+  params:
+    bootswatch: yeti
+
+reference:
+  - title: "simmer bricks"
+    desc: "Helper methods for simmer trajectories"
+    contents:
+      - delayed_release
+      - visit
+      - wait_until
+
+navbar:
+  title: simmer.bricks
+  left:
+  - text: "Home"
+    icon: fa-home
+    href: http://r-simmer.org
+  - text: "Reference"
+    icon: fa-gears
+    href: reference/index.html
+  - text: "News"
+    icon: fa-newspaper-o
+    href: news/index.html
