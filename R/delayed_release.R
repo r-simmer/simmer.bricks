@@ -54,31 +54,28 @@
 #'   synchronize(wait=FALSE)
 #'
 delayed_release <- function(.trj, .env, resource, task, amount=1) {
-  . <- NULL
-  .trj %>% {
-    if (!is_preemptive(.env, resource))
-      clone(
-        ., 2,
-        trajectory() %>%
-          set_capacity(resource, function()
-            get_capacity(.env, resource) - amount) %>%
-          release(resource, amount),
-        trajectory() %>%
-          timeout(task) %>%
-          set_capacity(resource, function()
-            get_capacity(.env, resource) + amount)
-      )
-    else
-      clone(
-        ., 2,
-        trajectory() %>%
-          release(resource, amount),
-        trajectory() %>%
-          set_prioritization(function()
-            get_prioritization(.env) + c(rep(.Machine$integer.max, 2), 0)) %>%
-          seize(resource, amount) %>%
-          timeout(task) %>%
-          release(resource, amount)
-      )
+  { if (!is_preemptive(.env, resource))
+    clone(
+      .trj, 2,
+      trajectory() %>%
+        set_capacity(resource, function()
+          get_capacity(.env, resource) - amount) %>%
+        release(resource, amount),
+      trajectory() %>%
+        timeout(task) %>%
+        set_capacity(resource, function()
+          get_capacity(.env, resource) + amount)
+    )
+  else
+    clone(
+      .trj, 2,
+      trajectory() %>%
+        release(resource, amount),
+      trajectory() %>%
+        set_prioritization(c(rep(.Machine$integer.max, 2), 0)) %>%
+        seize(resource, amount) %>%
+        timeout(task) %>%
+        release(resource, amount)
+    )
   } %>% synchronize(wait=FALSE)
 }
