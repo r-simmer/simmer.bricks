@@ -1,5 +1,10 @@
 context("delayed_release")
 
+test_that("a missing environment/resource fails", {
+  expect_error(delayed_release(trajectory(), NULL, "dummy", 5, 3))
+  expect_error(delayed_release(trajectory(), simmer(), "dummy", 5, 3))
+})
+
 test_that("delayed_release generates the correct sequence of activities", {
   env <- simmer() %>%
     add_resource("dummy", preemptive=FALSE) %>%

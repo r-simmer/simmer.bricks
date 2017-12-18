@@ -54,7 +54,12 @@
 #'   synchronize(wait=FALSE)
 #'
 delayed_release <- function(.trj, .env, resource, task, amount=1) {
-  { if (!is_preemptive(.env, resource))
+  if (!inherits(.env, "simmer"))
+    stop("Argument '", deparse(substitute(.env)), "' is not a 'simmer' environment")
+  if (!(resource %in% names(.env$get_resources())))
+    stop("Resource '", resource, "' not defined in '", deparse(substitute(.env)), "'")
+
+  { if (!.env$get_resources()[[resource]][["preemptive"]])
     clone(
       .trj, 2,
       trajectory() %>%
