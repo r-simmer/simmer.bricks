@@ -59,8 +59,8 @@ delayed_release <- function(.trj, .env, resource, task, amount=1) {
   if (!(resource %in% names(.env$get_resources())))
     stop("Resource '", resource, "' not defined in '", deparse(substitute(.env)), "'")
 
-  { if (!.env$get_resources()[[resource]][["preemptive"]])
-    clone(
+  if (!.env$get_resources()[[resource]][["preemptive"]]) {
+    .clone <- clone(
       .trj, 2,
       trajectory() %>%
         set_capacity(resource, function()
@@ -71,8 +71,8 @@ delayed_release <- function(.trj, .env, resource, task, amount=1) {
         set_capacity(resource, function()
           get_capacity(.env, resource) + amount)
     )
-  else
-    clone(
+  } else {
+    .clone <- clone(
       .trj, 2,
       trajectory() %>%
         release(resource, amount),
@@ -82,5 +82,7 @@ delayed_release <- function(.trj, .env, resource, task, amount=1) {
         timeout(task) %>%
         release(resource, amount)
     )
-  } %>% synchronize(wait=FALSE)
+  }
+
+  .clone %>% synchronize(wait=FALSE)
 }
