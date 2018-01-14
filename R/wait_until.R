@@ -1,13 +1,37 @@
-#' Wait until a Signal is Received
+#' Wait a Number of Signals
 #'
-#' This brick encapsulates a stop: trap one or more signals, wait for them,
-#' then untrap the signals and continue the trajectory.
+#' These bricks encapsulate \code{n} stops: wait for a sequence of \code{n}
+#' signals. \code{wait_until} also traps and untraps the required signals.
 #'
+#' @param n number of \code{wait} activities to chain.
 #' @inheritParams simmer::send
 #'
-#' @return Returns the following chain of activities: \code{\link[simmer:send]{trap}}
-#' > \code{\link[simmer:send]{wait}} > \code{\link[simmer:send]{untrap}}
-#' (see examples below).
+#' @return \code{wait_n} returns \code{n} times \code{\link[simmer:send]{wait}}.
+#' \code{wait_until} also adds \code{\link[simmer:send]{trap}} and
+#' \code{\link[simmer:send]{untrap}} at the beginning and end, respectively,
+#' of the chain of \code{wait}s (see examples below).
+#' @export
+#'
+#' @examples
+#' ## These are equivalent:
+#' trajectory() %>%
+#'   wait_n(3)
+#'
+#' trajectory() %>%
+#'   wait() %>%
+#'   wait() %>%
+#'   wait()
+#'
+wait_n <- function(.trj, n=1) {
+  if (!n) return(.trj)
+  stopifnot(n >= 1)
+
+  .trj %>%
+    wait() %>%
+    wait_n(n-1)
+}
+
+#' @rdname wait_n
 #' @export
 #'
 #' @examples
@@ -20,9 +44,21 @@
 #'   wait() %>%
 #'   untrap("green")
 #'
-wait_until <- function(.trj, signals) {
+#' ## These are equivalent:
+#' trajectory() %>%
+#'   wait_until(c("one", "another"), 2)
+#'
+#' trajectory() %>%
+#'   trap(c("one", "another")) %>%
+#'   wait() %>%
+#'   wait() %>%
+#'   untrap(c("one", "another"))
+#'
+wait_until <- function(.trj, signals, n=1) {
+  stopifnot(n >= 1)
+
   .trj %>%
     trap(signals) %>%
-    wait() %>%
+    wait_n(n) %>%
     untrap(signals)
 }
