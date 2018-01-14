@@ -76,7 +76,7 @@ do_parallel <- function(.trj, .env, ..., wait=TRUE, mon_all = FALSE) {
 
   if (!all(types)) {
     dots <- substitute(list(...))[-1]
-    args <- paste(sapply(dots, deparse)[[types]], collapse="', '")
+    args <- paste(sapply(dots, deparse)[!types], collapse="', '")
     stop("Arguments '", args, "' are not 'simmer' trajectories")
   }
 
