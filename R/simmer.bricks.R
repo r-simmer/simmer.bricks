@@ -8,7 +8,7 @@
 #' GitHub repository \url{https://github.com/r-simmer/simmer.bricks}.
 #'
 #' @docType package
-#' @name simmer.bricks
+#' @name simmer.bricks-package
 #'
 #' @import simmer
 NULL
