@@ -7,6 +7,7 @@
 #' @inheritParams simmer::release
 #' @inheritParams simmer::timeout
 #' @inheritParams simmer::get_capacity
+#' @inheritParams simmer::clone
 #'
 #' @return Returns the following chain of activities: \code{\link[simmer]{clone}}
 #' > \code{\link[simmer:clone]{synchronize}} (see examples below).
@@ -53,7 +54,7 @@
 #'   ) %>%
 #'   synchronize(wait=FALSE)
 #'
-delayed_release <- function(.trj, .env, resource, task, amount=1) {
+delayed_release <- function(.trj, .env, resource, task, amount=1, mon_all=FALSE) {
   if (!inherits(.env, "simmer"))
     stop("Argument '", deparse(substitute(.env)), "' is not a 'simmer' environment")
   if (!(resource %in% names(.env$get_resources())))
@@ -84,5 +85,5 @@ delayed_release <- function(.trj, .env, resource, task, amount=1) {
     )
   }
 
-  .clone %>% synchronize(wait=FALSE)
+  .clone %>% synchronize(wait=FALSE, mon_all=mon_all)
 }

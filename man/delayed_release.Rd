@@ -4,7 +4,7 @@
 \alias{delayed_release}
 \title{Delayed Release of a Resource}
 \usage{
-delayed_release(.trj, .env, resource, task, amount = 1)
+delayed_release(.trj, .env, resource, task, amount = 1, mon_all = FALSE)
 }
 \arguments{
 \item{.trj}{the trajectory object.}
@@ -19,6 +19,9 @@ automatically coerced to positive).}
 
 \item{amount}{the amount to seize/release, accepts either a numeric or a callable object
 (a function) which must return a numeric.}
+
+\item{mon_all}{if \code{TRUE}, \code{get_mon_arrivals} will show one
+line per clone.}
 }
 \value{
 Returns the following chain of activities: \code{\link[simmer]{clone}}
