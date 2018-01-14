@@ -6,8 +6,7 @@
 \alias{simmer.bricks-package}
 \title{\pkg{simmer.bricks}: Helper Methods for \pkg{simmer} Trajectories}
 \description{
-\pkg{simmer} bricks are helper methods that encapsulate common activity
-patterns in \pkg{simmer} trajectories.
+Provides wrappers for common activity patterns in \pkg{simmer} trajectories.
 }
 \seealso{
 \pkg{simmer}'s homepage \url{http://r-simmer.org} and
