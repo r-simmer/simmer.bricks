@@ -4,9 +4,10 @@ template:
 
 reference:
   - title: "simmer bricks"
-    desc: "Helper methods for simmer trajectories"
+    desc: "Helper methods for 'simmer' trajectories"
     contents:
       - delayed_release
+      - do_parallel
       - visit
       - wait_until
 
@@ -19,6 +20,11 @@ navbar:
   - text: "Reference"
     icon: fa-gears
     href: reference/index.html
+  - text: "Articles"
+    icon: fa-graduation-cap
+    menu:
+      - text: "Introduction to simmer.bricks"
+        href: articles/introduction.html
   - text: "News"
     icon: fa-newspaper-o
     href: news/index.html
@@ -28,7 +34,7 @@ navbar:
       - text: "simmer.plot"
         href: extensions/plot
       - text: "simmer.bricks"
-        href: https://github.com/r-simmer/simmer.bricks
+        href: estensions/bricks
       - text: "simmer.optim"
         href: https://github.com/r-simmer/simmer.optim
       - text: "simmer.json"

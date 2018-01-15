@@ -16,7 +16,11 @@ env:
 
 r_github_packages:
   - r-lib/covr
-  - r-simmer/simmer
 
 after_success:
   - Rscript -e 'covr::codecov()'
+
+before_script:
+  - mkdir -p .docs/extensions/bricks
+after_script:
+  - rm -rf .docs/extensions
