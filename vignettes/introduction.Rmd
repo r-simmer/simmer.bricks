@@ -1,0 +1,150 @@
+---
+title: "Introduction to `simmer.bricks`"
+author: "Iñaki Ucar"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Introduction to simmer.bricks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", 
+                      fig.width = 6, fig.height = 4, fig.align = "center")
+```
+
+## A motivating example
+
+The `simmer` package provides a rich and flexible API to build discrete-event simulations. However, there are certain recurring patterns that are typed over and over again. The most common example is probably to spend some time holding a resource. Let us consider the basic example from the [_Introduction to `simmer`_](http://r-simmer.org/articles/simmer-01-introduction.html):
+
+```{r, message=FALSE}
+library(simmer)
+
+patient.1 <- trajectory("patients' path") %>%
+  ## add an intake activity 
+  seize("nurse", 1) %>%
+  timeout(function() rnorm(1, 15)) %>%
+  release("nurse", 1) %>%
+  ## add a consultation activity
+  seize("doctor", 1) %>%
+  timeout(function() rnorm(1, 20)) %>%
+  release("doctor", 1) %>%
+  ## add a planning activity
+  seize("administration", 1) %>%
+  timeout(function() rnorm(1, 5)) %>%
+  release("administration", 1)
+```
+
+These `seize` > `timeout` > `release` blocks can be substituted by the `visit` verb, included in `simmer.bricks`:
+
+```{r, message=FALSE}
+library(simmer.bricks)
+
+patient.2 <- trajectory("patients' path") %>%
+  ## add an intake activity 
+  visit("nurse", function() rnorm(1, 15)) %>%
+  ## add a consultation activity
+  visit("doctor", function() rnorm(1, 20)) %>%
+  ## add a planning activity
+  visit("administration", function() rnorm(1, 5))
+```
+
+Internally, `simmer.bricks` just uses `simmer` verbs, so both trajectories are equivalent:
+
+```{r}
+patient.1
+patient.2
+```
+
+which means that you must have this in mind if you want to use a `rollback()` to loop over some part of the trajectory.
+
+In summary, the `simmer.bricks` package is a repository of `simmer` activity patterns like this one. See `help(package="simmer.bricks")` for a comprehensive list.
+
+## More compelling examples
+
+### Delayed release
+
+Some simulations require a resource to become inoperative for some time after a release. It is possible to simulate this with `simmer` using a technique that we call *delayed release*. Basically, while an arrival releases the resource and continues the trajectory, a clone of the latter keeps the resource busy for the time required; finally, the clone is removed. The main problem is that this *keeping the resource busy* must be implemented in different ways depending on the resource type, i.e., whether it is preemptive or not.
+
+This package encapsulates all this logic in a very easy-to-use brick called `delayed_release()`:
+
+```{r}
+env <- simmer() %>%
+  add_resource("res1") %>%
+  add_resource("res2", preemptive=TRUE)
+
+t <- trajectory() %>%
+  seize("res1") %>%
+  log_("res1 seized") %>%
+  seize("res2") %>%
+  log_("res2 seized") %>%
+  delayed_release(env, "res1", 2) %>% # inoperative for 2 units of time
+  log_("res1 released") %>%
+  delayed_release(env, "res2", 5) %>% # inoperative for 5 units of time
+  log_("res1 released")
+
+env %>%
+  add_generator("dummy", t, at(0, 1)) %>%
+  run() %>% invisible
+```
+
+If you are curious, you can print the trajectory above to see what happens behind the scenes.
+
+### Parallel tasks
+
+Another common pattern is to set up a number of parallel tasks with `clone()`. This could be challenging if the original arrival had resources seized. Let us consider the following case, in which a doctor and a nurse are visiting patients in a hospital room:
+
+```{r, error=TRUE}
+t <- trajectory() %>%
+  seize("room") %>%
+  clone(
+    n = 2,
+    trajectory("doctor") %>%
+      timeout(1),
+    trajectory("nurse") %>%
+      timeout(2)) %>%
+  synchronize(wait = TRUE) %>%
+  timeout(0.5) %>%
+  release("room",1)
+
+simmer() %>%
+  add_resource("room") %>%
+  add_generator("visit", t, at(0)) %>%
+  run()
+```
+
+This simulation fails. This is because the original arrival, which seized the room and follows the first path (doctor), finishes its duty in the first place. Given that `wait = TRUE` for the `synchronize()` activity, it means that the last clone to arrive there (the nurse in this case) continues, while the others are removed.
+
+Solving this requires ensuring that the original arrival reaches the `synchronize()` activity in the last place (or in the first place if `wait = FALSE`), which can be tricky, as some asynchronous programming must be used. However, `simmer.bricks` provides the `do_parallel()` brick:
+
+```{r}
+env <- simmer()
+
+t <- trajectory() %>%
+  seize("room") %>%
+  log_("room seized") %>%
+  do_parallel(
+    env,
+    trajectory("doctor") %>%
+      timeout(1),
+    trajectory("nurse") %>%
+      timeout(2)
+  ) %>%
+  timeout(0.5) %>%
+  release("room",1) %>%
+  log_("room released")
+
+env %>%
+  add_resource("room") %>%
+  add_generator("visit", t, at(0)) %>%
+  run() %>% invisible
+```
+
+And everything just works.
+
+## Contributing
+
+If you know about more patterns that you would like to see included in `simmer.bricks`, please, open an issue or a pull request [on GitHub](https://github.com/r-simmer/simmer.bricks).
