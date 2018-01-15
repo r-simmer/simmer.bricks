@@ -1,13 +1,10 @@
 context("do_parallel")
 
-test_that("a missing environment/trajectory fails", {
-  expect_error(do_parallel(trajectory(), NULL, trajectory()))
+test_that("a missing trajectory fails", {
   expect_error(do_parallel(trajectory(), simmer(), NULL))
 })
 
 test_that("do_parallel generates the correct sequence of activities", {
-  env <- simmer()
-
   t <- trajectory() %>%
     do_parallel(env, trajectory(), trajectory(), wait=TRUE)
 

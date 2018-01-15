@@ -4,7 +4,8 @@
 \alias{delayed_release}
 \title{Delayed Release of a Resource}
 \usage{
-delayed_release(.trj, .env, resource, task, amount = 1, mon_all = FALSE)
+delayed_release(.trj, .env, resource, task, amount = 1, preemptive = FALSE,
+  mon_all = FALSE)
 }
 \arguments{
 \item{.trj}{the trajectory object.}
@@ -20,6 +21,9 @@ automatically coerced to positive).}
 \item{amount}{the amount to seize/release, accepts either a numeric or a callable object
 (a function) which must return a numeric.}
 
+\item{preemptive}{whether arrivals in the server can be preempted or not based
+on seize priorities.}
+
 \item{mon_all}{if \code{TRUE}, \code{get_mon_arrivals} will show one
 line per clone.}
 }
@@ -33,9 +37,7 @@ and continues its way immediately, but the resource is busy for an additional
 period of time.
 }
 \examples{
-env <- simmer() \%>\%
-  add_resource("res1") \%>\%
-  add_resource("res2", preemptive=TRUE)
+env <- simmer()
 
 ## These are equivalent if the resource is non-preemptive:
 trajectory() \%>\%
@@ -57,7 +59,7 @@ trajectory() \%>\%
 
 ## These are equivalent if the resource is preemptive:
 trajectory() \%>\%
-  delayed_release(env, "res2", 5, 1)
+  delayed_release(env, "res2", 5, 1, preemptive=TRUE)
 
 trajectory() \%>\%
   clone(

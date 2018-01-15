@@ -1,15 +1,6 @@
 context("delayed_release")
 
-test_that("a missing environment/resource fails", {
-  expect_error(delayed_release(trajectory(), NULL, "dummy", 5, 3))
-  expect_error(delayed_release(trajectory(), simmer(), "dummy", 5, 3))
-})
-
 test_that("delayed_release generates the correct sequence of activities", {
-  env <- simmer() %>%
-    add_resource("dummy", preemptive=FALSE) %>%
-    add_resource("dummy_preemptive", preemptive=TRUE)
-
   t <- trajectory() %>%
     delayed_release(env, "dummy", 5, 3)
 
@@ -22,7 +13,7 @@ test_that("delayed_release generates the correct sequence of activities", {
   expect_output(print(t[[2]]), "Synchronize.*0")
 
   t <- trajectory() %>%
-    delayed_release(env, "dummy_preemptive", 5, 3)
+    delayed_release(env, "dummy_preemptive", 5, 3, preemptive=TRUE)
 
   expect_equal(length(t), 2)
   expect_equal(get_n_activities(t), 7)

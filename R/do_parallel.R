@@ -68,9 +68,6 @@
 #'   untrap(signal)
 #'
 do_parallel <- function(.trj, .env, ..., wait=TRUE, mon_all = FALSE) {
-  if (!inherits(.env, "simmer"))
-    stop("Argument '", deparse(substitute(.env)), "' is not a 'simmer' environment")
-
   tasks <- list(...)
   types <- sapply(tasks, inherits, what="trajectory")
 

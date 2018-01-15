@@ -7,6 +7,7 @@
 #' @inheritParams simmer::release
 #' @inheritParams simmer::timeout
 #' @inheritParams simmer::get_capacity
+#' @inheritParams simmer::add_resource
 #' @inheritParams simmer::clone
 #'
 #' @return Returns the following chain of activities: \code{\link[simmer]{clone}}
@@ -14,9 +15,7 @@
 #' @export
 #'
 #' @examples
-#' env <- simmer() %>%
-#'   add_resource("res1") %>%
-#'   add_resource("res2", preemptive=TRUE)
+#' env <- simmer()
 #'
 #' ## These are equivalent if the resource is non-preemptive:
 #' trajectory() %>%
@@ -38,7 +37,7 @@
 #'
 #' ## These are equivalent if the resource is preemptive:
 #' trajectory() %>%
-#'   delayed_release(env, "res2", 5, 1)
+#'   delayed_release(env, "res2", 5, 1, preemptive=TRUE)
 #'
 #' trajectory() %>%
 #'   clone(
@@ -54,13 +53,8 @@
 #'   ) %>%
 #'   synchronize(wait=FALSE)
 #'
-delayed_release <- function(.trj, .env, resource, task, amount=1, mon_all=FALSE) {
-  if (!inherits(.env, "simmer"))
-    stop("Argument '", deparse(substitute(.env)), "' is not a 'simmer' environment")
-  if (!(resource %in% names(.env$get_resources())))
-    stop("Resource '", resource, "' not defined in '", deparse(substitute(.env)), "'")
-
-  if (!.env$get_resources()[[resource]][["preemptive"]]) {
+delayed_release <- function(.trj, .env, resource, task, amount=1, preemptive=FALSE, mon_all=FALSE) {
+  if (!preemptive) {
     .clone <- clone(
       .trj, 2,
       trajectory() %>%
