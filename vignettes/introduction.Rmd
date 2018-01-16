@@ -81,9 +81,11 @@ t <- trajectory() %>%
   log_("res1 seized") %>%
   seize("res2") %>%
   log_("res2 seized") %>%
-  delayed_release(env, "res1", 2) %>% # inoperative for 2 units of time
+  # inoperative for 2 units of time
+  delayed_release(env, "res1", 2) %>% 
   log_("res1 released") %>%
-  delayed_release(env, "res2", 5) %>% # inoperative for 5 units of time
+  # inoperative for 5 units of time
+  delayed_release(env, "res2", 5, preemptive=TRUE) %>%
   log_("res1 released")
 
 env %>%
