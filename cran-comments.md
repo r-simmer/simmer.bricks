@@ -1,4 +1,4 @@
-## New release
+## New submission
 
 This package is an add-on for 'simmer'. It provides helper methods which encapsulate common simulation patterns.
 
