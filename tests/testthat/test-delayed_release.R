@@ -2,7 +2,7 @@ context("delayed_release")
 
 test_that("delayed_release generates the correct sequence of activities", {
   t <- trajectory() %>%
-    delayed_release(env, "dummy", 5, 3)
+    delayed_release("dummy", 5, 3)
 
   expect_equal(length(t), 2)
   expect_equal(get_n_activities(t), 6)
@@ -13,7 +13,7 @@ test_that("delayed_release generates the correct sequence of activities", {
   expect_output(print(t[[2]]), "Synchronize.*0")
 
   t <- trajectory() %>%
-    delayed_release(env, "dummy_preemptive", 5, 3, preemptive=TRUE)
+    delayed_release("dummy_preemptive", 5, 3, preemptive=TRUE)
 
   expect_equal(length(t), 2)
   expect_equal(get_n_activities(t), 7)
