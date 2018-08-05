@@ -149,6 +149,35 @@ env %>%
 
 And everything just works.
 
+### Interleaved resources
+
+Assembly lines are chains of limited resources in which the current resource cannot be released until the next one is available. This class of problems can be solved with a pattern called *interleaved resources*. Such pattern uses auxiliary
+resources to guard the access to the second and subsequent resources in the chain, serving as a *token* to the guarded resource. As a consequence, if a resource is
+blocked for some reason, its tokens will exhaust eventually, and thus the blockage will propagate backwards.
+
+Let us consider a chain of two machines, A and B, whose service times are 1 and 2 respectively. Then, the chain of resources can be set up as follows:
+
+```{r}
+t <- trajectory() %>%
+  interleave(c("A", "B"), c(1, 2))
+
+t
+```
+
+As can be seen, the `interleave` brick uses an auxiliary resource called `"B_token"` that must be defined too. If machine B has `capacity=1` and `queue_size=1`, then `"B_token"` must have `capacity=2` (B's capacity + queue size) and `queue_size=Inf`, to avoid dropping arrivals.
+
+```{r}
+simmer() %>%
+  add_resource("A", 3, 1) %>%
+  add_resource("B_token", 2, Inf) %>%
+  add_resource("B", 1, 1) %>%
+  add_generator("dummy", t, at(rep(0, 3))) %>%
+  run(4) %>%
+  get_mon_arrivals(per_resource = TRUE)
+```
+
+In the simuation above, three arrivals are processed in machine A during 1 unit of time. Then the first two successfully seize a token to B, but the last arrival has to wait until one of them leave B before releasing A.
+
 ## Contributing
 
 If you know about more patterns that you would like to see included in `simmer.bricks`, please, open an issue or a pull request [on GitHub](https://github.com/r-simmer/simmer.bricks).

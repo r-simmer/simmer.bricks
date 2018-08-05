@@ -3,6 +3,7 @@
 export(delayed_release)
 export(delayed_release_selected)
 export(do_parallel)
+export(interleave)
 export(visit)
 export(visit_selected)
 export(wait_n)

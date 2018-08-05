@@ -3,6 +3,7 @@
 ## New features
 
 * Implement `delayed_release_selected()` (#9 addressing #4).
+* New `interleave()` brick to set up interleaved resources (#11 addressing #7).
 
 ## Minor changes and fixes
 
