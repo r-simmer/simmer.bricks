@@ -58,7 +58,7 @@ interleave <- function(.trj, resources, task, amount=1) {
       timeout(task[[i]])
 
     if (i < length(resources)) .trj %>%
-      seize(paste0(resources[[i+1]], "_token"), amount[[i]])
+      seize(paste0(resources[[i+1]], "_token"), amount[[i+1]])
 
     .trj %>%
       release(resources[[i]], amount[[i]])
