@@ -1,5 +1,10 @@
-# simmer.bricks 0.1.0.9000
+# simmer.bricks 0.2.0
+
+## New features
+
+* Implement `delayed_release_selected()` (#9 addressing #4).
 
 ## Minor changes and fixes
 
-* Fix `do_parallel` to also accept lists of trajectories as input (#6).
+* Fix `do_parallel()` to also accept lists of trajectories as input (#6).
+* Simplify `delayed_release()` interface (as part of #9).
