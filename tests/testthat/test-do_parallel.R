@@ -1,7 +1,7 @@
 context("do_parallel")
 
 test_that("a missing trajectory fails", {
-  expect_error(do_parallel(trajectory(), NULL, .env=simmer()))
+  expect_error(do_parallel(trajectory(), "asdf", .env=simmer()))
 })
 
 test_that("do_parallel generates the correct sequence of activities", {
