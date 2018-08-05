@@ -11,7 +11,7 @@ do_parallel(.trj, .env, ..., wait = TRUE, mon_all = FALSE)
 
 \item{.env}{the simulation environment.}
 
-\item{...}{parallel sub-trajectories.}
+\item{...}{sub-trajectories or list of sub-trajectories to parallelise.}
 
 \item{wait}{if \code{TRUE}, the arrival waits until all parallel sub-trajectories
 are finished; if \code{FALSE}, the arrival continues as soon as the first
