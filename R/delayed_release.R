@@ -74,3 +74,32 @@ delayed_release <- function(.trj, resource, task, amount=1, preemptive=FALSE, mo
 
   .clone %>% synchronize(wait=FALSE, mon_all=mon_all)
 }
+
+#' @rdname delayed_release
+#' @export
+delayed_release_selected <- function(.trj, task, amount=1, preemptive=FALSE, mon_all=FALSE) {
+  if (!preemptive) {
+    .clone <- clone(
+      .trj, 2,
+      trajectory() %>%
+        set_capacity_selected(-amount, mod="+") %>%
+        release_selected(amount),
+      trajectory() %>%
+        timeout(task) %>%
+        set_capacity_selected(amount, mod="+")
+    )
+  } else {
+    .clone <- clone(
+      .trj, 2,
+      trajectory() %>%
+        release_selected(amount),
+      trajectory() %>%
+        set_prioritization(c(rep(.Machine$integer.max, 2), 0)) %>%
+        seize_selected(amount) %>%
+        timeout(task) %>%
+        release_selected(amount)
+    )
+  }
+
+  .clone %>% synchronize(wait=FALSE, mon_all=mon_all)
+}
