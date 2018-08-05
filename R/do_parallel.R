@@ -27,9 +27,9 @@
 #' ## These are equivalent:
 #' trajectory() %>%
 #'   do_parallel(
-#'     env, wait = TRUE,
 #'     task.1,
-#'     task.2
+#'     task.2,
+#'     .env = env, wait = TRUE
 #'   )
 #'
 #' trajectory() %>%
@@ -49,9 +49,9 @@
 #' ## These are equivalent:
 #' trajectory() %>%
 #'   do_parallel(
-#'     env, wait = FALSE,
 #'     task.1,
-#'     task.2
+#'     task.2,
+#'     .env = env, wait = FALSE
 #'   )
 #'
 #' trajectory() %>%
@@ -67,7 +67,7 @@
 #'   wait() %>%
 #'   untrap(signal)
 #'
-do_parallel <- function(.trj, .env, ..., wait=TRUE, mon_all = FALSE) {
+do_parallel <- function(.trj, ..., .env, wait=TRUE, mon_all = FALSE) {
   tasks <- c(...)
   types <- sapply(tasks, inherits, what="trajectory")
 

@@ -129,13 +129,13 @@ t <- trajectory() %>%
   seize("room") %>%
   log_("room seized") %>%
   do_parallel(
-    env,
     trajectory("doctor") %>%
       timeout(1) %>%
       log_("doctor path done"),
     trajectory("nurse") %>%
       timeout(2) %>%
-      log_("nurse path done")
+      log_("nurse path done"),
+    .env = env
   ) %>%
   timeout(0.5) %>%
   release("room",1) %>%

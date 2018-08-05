@@ -4,14 +4,14 @@
 \alias{do_parallel}
 \title{Perform Parallel Tasks}
 \usage{
-do_parallel(.trj, .env, ..., wait = TRUE, mon_all = FALSE)
+do_parallel(.trj, ..., .env, wait = TRUE, mon_all = FALSE)
 }
 \arguments{
 \item{.trj}{the trajectory object.}
 
-\item{.env}{the simulation environment.}
-
 \item{...}{sub-trajectories or list of sub-trajectories to parallelise.}
+
+\item{.env}{the simulation environment.}
 
 \item{wait}{if \code{TRUE}, the arrival waits until all parallel sub-trajectories
 are finished; if \code{FALSE}, the arrival continues as soon as the first
@@ -41,9 +41,9 @@ task.2 <- trajectory("task 2") \%>\%
 ## These are equivalent:
 trajectory() \%>\%
   do_parallel(
-    env, wait = TRUE,
     task.1,
-    task.2
+    task.2,
+    .env = env, wait = TRUE
   )
 
 trajectory() \%>\%
@@ -63,9 +63,9 @@ trajectory() \%>\%
 ## These are equivalent:
 trajectory() \%>\%
   do_parallel(
-    env, wait = FALSE,
     task.1,
-    task.2
+    task.2,
+    .env = env, wait = FALSE
   )
 
 trajectory() \%>\%

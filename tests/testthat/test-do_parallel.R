@@ -6,7 +6,7 @@ test_that("a missing trajectory fails", {
 
 test_that("do_parallel generates the correct sequence of activities", {
   t <- trajectory() %>%
-    do_parallel(env, trajectory(), trajectory(), wait=TRUE)
+    do_parallel(trajectory(), trajectory(), .env=env, wait=TRUE)
 
   expect_equal(length(t), 2)
   expect_equal(get_n_activities(t), 8)
@@ -17,7 +17,7 @@ test_that("do_parallel generates the correct sequence of activities", {
   expect_output(print(t[[2]]), "Synchronize.*1")
 
   t <- trajectory() %>%
-    do_parallel(env, trajectory(), trajectory(), wait=FALSE)
+    do_parallel(trajectory(), trajectory(), .env=env, wait=FALSE)
 
   expect_equal(length(t), 4)
   expect_equal(get_n_activities(t), 7)
