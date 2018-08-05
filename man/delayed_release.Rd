@@ -4,8 +4,8 @@
 \alias{delayed_release}
 \title{Delayed Release of a Resource}
 \usage{
-delayed_release(.trj, .env, resource, task, amount = 1, preemptive = FALSE,
-  mon_all = FALSE)
+delayed_release(.trj, .env, resource, task, amount = 1,
+  preemptive = FALSE, mon_all = FALSE)
 }
 \arguments{
 \item{.trj}{the trajectory object.}
@@ -18,8 +18,8 @@ delayed_release(.trj, .env, resource, task, amount = 1, preemptive = FALSE,
 callable object (a function) which must return a numeric (negative values are
 automatically coerced to positive).}
 
-\item{amount}{the amount to seize/release, accepts either a numeric or a callable object
-(a function) which must return a numeric.}
+\item{amount}{the amount to seize/release, accepts either a numeric or a callable
+object (a function) which must return a numeric.}
 
 \item{preemptive}{whether arrivals in the server can be preempted or not based
 on seize priorities.}
