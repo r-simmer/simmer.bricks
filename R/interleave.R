@@ -2,7 +2,7 @@
 #'
 #' This brick encapsulates a chain of interleaved resources, i.e., the current
 #' resource is not released until the next one in the chain is available. An
-#' interesting propery of such a pattern is that, if one resource is blocked for
+#' interesting property of such a pattern is that, if one resource is blocked for
 #' some reason, the whole chain stops.
 #'
 #' @param resources character vector of resource names.
