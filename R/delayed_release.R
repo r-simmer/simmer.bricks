@@ -15,29 +15,25 @@
 #' @export
 #'
 #' @examples
-#' env <- simmer()
-#'
-#' ## These are equivalent if the resource is non-preemptive:
+#' ## These are equivalent for a non-preemptive resource:
 #' trajectory() %>%
-#'   delayed_release(env, "res1", 5, 1)
+#'   delayed_release("res1", 5, 1)
 #'
 #' trajectory() %>%
 #'   clone(
 #'     2,
 #'     trajectory() %>%
-#'       set_capacity("res1", function()
-#'         get_capacity(env, "res1") - 1) %>%
+#'       set_capacity("res1", -1, mod="+") %>%
 #'       release("res1", 1),
 #'     trajectory() %>%
 #'       timeout(5) %>%
-#'       set_capacity("res1", function()
-#'         get_capacity(env, "res1") + 1)
+#'       set_capacity("res1", 1, mod="+")
 #'   ) %>%
 #'   synchronize(wait=FALSE)
 #'
-#' ## These are equivalent if the resource is preemptive:
+#' ## These are equivalent for a preemptive resource:
 #' trajectory() %>%
-#'   delayed_release(env, "res2", 5, 1, preemptive=TRUE)
+#'   delayed_release("res2", 5, 1, preemptive=TRUE)
 #'
 #' trajectory() %>%
 #'   clone(
@@ -45,26 +41,23 @@
 #'     trajectory() %>%
 #'       release("res2", 1),
 #'     trajectory() %>%
-#'       set_prioritization(function()
-#'         get_prioritization(env) + c(rep(.Machine$integer.max, 2), 0)) %>%
+#'       set_prioritization(c(rep(.Machine$integer.max, 2), 0)) %>%
 #'       seize("res2", 1) %>%
 #'       timeout(5) %>%
 #'       release("res2", 1)
 #'   ) %>%
 #'   synchronize(wait=FALSE)
 #'
-delayed_release <- function(.trj, .env, resource, task, amount=1, preemptive=FALSE, mon_all=FALSE) {
+delayed_release <- function(.trj, resource, task, amount=1, preemptive=FALSE, mon_all=FALSE) {
   if (!preemptive) {
     .clone <- clone(
       .trj, 2,
       trajectory() %>%
-        set_capacity(resource, function()
-          get_capacity(.env, resource) - amount) %>%
+        set_capacity(resource, -amount, mod="+") %>%
         release(resource, amount),
       trajectory() %>%
         timeout(task) %>%
-        set_capacity(resource, function()
-          get_capacity(.env, resource) + amount)
+        set_capacity(resource, amount, mod="+")
     )
   } else {
     .clone <- clone(
@@ -76,6 +69,35 @@ delayed_release <- function(.trj, .env, resource, task, amount=1, preemptive=FAL
         seize(resource, amount) %>%
         timeout(task) %>%
         release(resource, amount)
+    )
+  }
+
+  .clone %>% synchronize(wait=FALSE, mon_all=mon_all)
+}
+
+#' @rdname delayed_release
+#' @export
+delayed_release_selected <- function(.trj, task, amount=1, preemptive=FALSE, mon_all=FALSE) {
+  if (!preemptive) {
+    .clone <- clone(
+      .trj, 2,
+      trajectory() %>%
+        set_capacity_selected(-amount, mod="+") %>%
+        release_selected(amount),
+      trajectory() %>%
+        timeout(task) %>%
+        set_capacity_selected(amount, mod="+")
+    )
+  } else {
+    .clone <- clone(
+      .trj, 2,
+      trajectory() %>%
+        release_selected(amount),
+      trajectory() %>%
+        set_prioritization(c(rep(.Machine$integer.max, 2), 0)) %>%
+        seize_selected(amount) %>%
+        timeout(task) %>%
+        release_selected(amount)
     )
   }
 
