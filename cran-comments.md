@@ -1,6 +1,7 @@
-## Minor release
+## Patch release
 
-New features, small API changes, fixes and improved documentation.
+The maintainer's address has changed. It is the same account, just a different
+alias. I'm sending confirmation from the previous address to CRAN-submissions.
 
 ## Test environments
 

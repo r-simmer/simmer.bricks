@@ -3,7 +3,7 @@ Type: Package
 Title: Helper Methods for 'simmer' Trajectories
 Version: 0.2.0.9000
 Authors@R: c(
-    person("Iñaki", "Ucar", email="i.ucar86@gmail.com", 
+    person("Iñaki", "Ucar", email="iucar@fedoraproject.org",
       role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")))
 Description: Provides wrappers for common activity patterns in 'simmer' trajectories.
 License: MIT + file LICENSE
