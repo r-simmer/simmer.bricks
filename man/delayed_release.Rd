@@ -20,8 +20,8 @@ delayed_release_selected(.trj, task, amount = 1, preemptive = FALSE,
 callable object (a function) which must return a numeric (negative values are
 automatically coerced to positive).}
 
-\item{amount}{the amount to seize/release, accepts either a numeric or a callable
-object (a function) which must return a numeric.}
+\item{amount}{the amount to seize/release, accepts either a numeric or a
+callable object (a function) which must return a numeric.}
 
 \item{preemptive}{whether arrivals in the server can be preempted or not based
 on seize priorities.}

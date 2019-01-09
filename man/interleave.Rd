@@ -15,8 +15,8 @@ interleave(.trj, resources, task, amount = 1)
 callable object (a function) which must return a numeric (negative values are
 automatically coerced to positive).}
 
-\item{amount}{the amount to seize/release, accepts either a numeric or a callable
-object (a function) which must return a numeric.}
+\item{amount}{the amount to seize/release, accepts either a numeric or a
+callable object (a function) which must return a numeric.}
 }
 \value{
 Returns the following chain of activities: \code{\link[simmer]{seize}}
