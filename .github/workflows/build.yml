@@ -52,13 +52,14 @@ jobs:
 
     - name: Install dependencies
       run: |
+        remotes::install_github("r-simmer/simmer")
         remotes::install_deps(dependencies=TRUE)
         remotes::install_cran(c("rcmdcheck", "covr"))
       shell: Rscript {0}
 
     - name: Check
       run: |
-        dir.create(".docs/extensions/plot", recursive=TRUE)
+        dir.create(".docs/extensions/bricks", recursive=TRUE)
         rcmdcheck::rcmdcheck(args=c("--no-manual", "--as-cran"),
           error_on="warning", check_dir="check")
         unlink(".docs/extensions")
