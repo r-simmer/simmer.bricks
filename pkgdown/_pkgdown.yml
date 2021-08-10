@@ -3,6 +3,8 @@ template:
     bootswatch: yeti
     ganalytics: UA-115358925-1
 
+destination: docs/extensions/bricks
+
 reference:
   - title: "simmer bricks"
     desc: "Helper methods for 'simmer' trajectories"
