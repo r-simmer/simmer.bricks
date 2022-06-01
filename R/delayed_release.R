@@ -53,7 +53,7 @@ delayed_release <- function(.trj, resource, task, amount=1, preemptive=FALSE, mo
     .clone <- clone(
       .trj, 2,
       trajectory() %>%
-        set_capacity(resource, -amount, mod="+") %>%
+        set_capacity(resource, Minus(amount), mod="+") %>%
         release(resource, amount),
       trajectory() %>%
         timeout(task) %>%
@@ -82,7 +82,7 @@ delayed_release_selected <- function(.trj, task, amount=1, preemptive=FALSE, mon
     .clone <- clone(
       .trj, 2,
       trajectory() %>%
-        set_capacity_selected(-amount, mod="+") %>%
+        set_capacity_selected(Minus(amount), mod="+") %>%
         release_selected(amount),
       trajectory() %>%
         timeout(task) %>%

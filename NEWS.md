@@ -1,3 +1,7 @@
+# simmer.bricks 0.2.1.9000
+
+- Fix `amount` argument for `delayed_release()` to support functions (#16).
+
 # simmer.bricks 0.2.1
 
 - Fix tests for simmer 4.2.0.

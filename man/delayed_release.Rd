@@ -5,11 +5,22 @@
 \alias{delayed_release_selected}
 \title{Delayed Release of a Resource}
 \usage{
-delayed_release(.trj, resource, task, amount = 1, preemptive = FALSE,
-  mon_all = FALSE)
+delayed_release(
+  .trj,
+  resource,
+  task,
+  amount = 1,
+  preemptive = FALSE,
+  mon_all = FALSE
+)
 
-delayed_release_selected(.trj, task, amount = 1, preemptive = FALSE,
-  mon_all = FALSE)
+delayed_release_selected(
+  .trj,
+  task,
+  amount = 1,
+  preemptive = FALSE,
+  mon_all = FALSE
+)
 }
 \arguments{
 \item{.trj}{the trajectory object.}

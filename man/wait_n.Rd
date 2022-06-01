@@ -14,8 +14,9 @@ wait_until(.trj, signals, n = 1)
 
 \item{n}{number of \code{wait} activities to chain.}
 
-\item{signals}{signal or list of signals, accepts either a string, a list of strings or a
-callable object (a function) which must return a string or a list of strings.}
+\item{signals}{signal or list of signals, accepts either a string, a list of
+strings or a callable object (a function) which must return a string or a
+list of strings.}
 }
 \value{
 \code{wait_n} returns \code{n} times \code{\link[simmer:send]{wait}}.
