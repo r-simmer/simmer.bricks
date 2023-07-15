@@ -8,7 +8,7 @@
 Provides wrappers for common activity patterns in \pkg{simmer} trajectories.
 }
 \seealso{
-\pkg{simmer}'s homepage \url{http://r-simmer.org} and
+\pkg{simmer}'s homepage \url{https://r-simmer.org} and
 GitHub repository \url{https://github.com/r-simmer/simmer.bricks}.
 }
 \author{

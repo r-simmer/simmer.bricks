@@ -2,16 +2,16 @@
 
 <!-- badges: start -->
 [![build](https://github.com/r-simmer/simmer.bricks/actions/workflows/build.yml/badge.svg)](https://github.com/r-simmer/simmer.bricks/actions/workflows/build.yml)
-[![Coverage Status](https://codecov.io/gh/r-simmer/simmer.bricks/branch/master/graph/badge.svg)](https://codecov.io/gh/r-simmer/simmer.bricks)
+[![Coverage Status](https://codecov.io/gh/r-simmer/simmer.bricks/branch/master/graph/badge.svg)](https://app.codecov.io/gh/r-simmer/simmer.bricks)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/simmer.bricks)](https://cran.r-project.org/package=simmer.bricks)
-[![Downloads](https://cranlogs.r-pkg.org/badges/simmer.bricks)](https://cran.rstudio.com/package=simmer.bricks)
+[![Downloads](https://cranlogs.r-pkg.org/badges/simmer.bricks)](https://cran.r-project.org/package=simmer.bricks)
 <!-- badges: end -->
 
-**simmer.bricks** provides helper methods for [**simmer**](http://r-simmer.org), the Discrete-Event Simulation (DES) package for R. Each **simmer** *brick* wraps a common activity pattern that can be used to build trajectories more conveniently.
+**simmer.bricks** provides helper methods for [**simmer**](https://r-simmer.org), the Discrete-Event Simulation (DES) package for R. Each **simmer** *brick* wraps a common activity pattern that can be used to build trajectories more conveniently.
 
 ## Documentation
 
-Documentation is available at [r-simmer.org/extensions/bricks/reference](http://r-simmer.org/extensions/bricks/reference). To get started, please explore our [vignettes online](http://r-simmer.org/extensions/bricks/articles/), or in R:
+Documentation is available at [r-simmer.org/extensions/bricks/reference](https://r-simmer.org/extensions/bricks/reference). To get started, please explore our [vignettes online](https://r-simmer.org/extensions/bricks/articles/), or in R:
 
 ``` r
 vignette(package = "simmer.bricks")

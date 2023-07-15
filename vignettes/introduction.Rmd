@@ -18,7 +18,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
 
 ## A motivating example
 
-The `simmer` package provides a rich and flexible API to build discrete-event simulations. However, there are certain recurring patterns that are typed over and over again. The most common example is probably to spend some time holding a resource. Let us consider the basic example from the [_Introduction to `simmer`_](http://r-simmer.org/articles/simmer-01-introduction.html):
+The `simmer` package provides a rich and flexible API to build discrete-event simulations. However, there are certain recurring patterns that are typed over and over again. The most common example is probably to spend some time holding a resource. Let us consider the basic example from the [_Introduction to `simmer`_](https://r-simmer.org/articles/simmer-01-introduction.html):
 
 ```{r, message=FALSE}
 library(simmer)
